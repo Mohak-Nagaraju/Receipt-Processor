@@ -30,7 +30,7 @@ class ReceiptControllerTest {
 
     @BeforeEach
     void setUp() {
-        // Initialize mocks
+        // Initializing mocks
         MockitoAnnotations.openMocks(this);
 
         // Set up the mock receipt and expected receipt ID
@@ -43,7 +43,7 @@ class ReceiptControllerTest {
         // Mock the service response for points
         when(receiptService.getPoints(receiptId)).thenReturn(88);
 
-        // Call the controller method directly
+        // Calling the controller method directly
         ResponseEntity<ReceiptPointsResponse> response = receiptController.getPoints(receiptId);
 
         // Extract the body, which should be a ReceiptPointsResponse object
@@ -51,6 +51,6 @@ class ReceiptControllerTest {
 
         // Ensure the response body is not null and contains the correct points
         assert responseBody != null; // Ensure it's not null
-        assertEquals(88, responseBody.getPoints()); // Verify points
+        assertEquals(88, responseBody.getPoints()); // Verifying points
     }
 }
