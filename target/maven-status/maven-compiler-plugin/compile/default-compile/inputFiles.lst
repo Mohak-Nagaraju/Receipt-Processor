@@ -1,8 +1,0 @@
-/Users/mohakn/Desktop/Fetch/src/main/java/com/fetch/receiptprocessor/ReceiptProcessorApplication.java
-/Users/mohakn/Desktop/Fetch/src/main/java/com/fetch/receiptprocessor/controller/GlobalExceptionHandler.java
-/Users/mohakn/Desktop/Fetch/src/main/java/com/fetch/receiptprocessor/controller/ReceiptController.java
-/Users/mohakn/Desktop/Fetch/src/main/java/com/fetch/receiptprocessor/model/Item.java
-/Users/mohakn/Desktop/Fetch/src/main/java/com/fetch/receiptprocessor/model/Receipt.java
-/Users/mohakn/Desktop/Fetch/src/main/java/com/fetch/receiptprocessor/model/ReceiptPointsResponse.java
-/Users/mohakn/Desktop/Fetch/src/main/java/com/fetch/receiptprocessor/model/ReceiptResponse.java
-/Users/mohakn/Desktop/Fetch/src/main/java/com/fetch/receiptprocessor/service/ReceiptService.java

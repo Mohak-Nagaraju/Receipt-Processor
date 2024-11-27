@@ -58,6 +58,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>receipt-processor</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -65,5 +66,6 @@
 			</plugin>
 		</plugins>
 	</build>
+
 
 </project>
