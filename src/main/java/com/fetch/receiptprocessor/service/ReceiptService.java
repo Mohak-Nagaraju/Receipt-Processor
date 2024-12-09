@@ -1,12 +1,10 @@
 package com.fetch.receiptprocessor.service;
 
-import com.fetch.receiptprocessor.model.Item;
-import com.fetch.receiptprocessor.model.Receipt;
+import com.fetch.receiptprocessor.model.*;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ReceiptService {
@@ -61,6 +59,70 @@ public class ReceiptService {
         return points;
     }
 
+    public List<ReceiptSummaryResponse> getAllReceipts() {
+        return receiptPoints.entrySet().stream()
+                .map(entry -> new ReceiptSummaryResponse(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
+    }
+
+    public ReceiptPointsResponse updateReceipt(String id, Receipt updatedReceipt) {
+        validateReceipt(updatedReceipt);
+        if (!receiptPoints.containsKey(id)) {
+            throw new IllegalArgumentException("Receipt with ID " + id + " not found.");
+        }
+
+        int updatedPoints = calculatePoints(updatedReceipt);
+        receiptPoints.put(id, updatedPoints);
+
+        return new ReceiptPointsResponse(updatedPoints);
+    }
+
+    public void deleteReceipt(String id) {
+        if (!receiptPoints.containsKey(id)) {
+            throw new IllegalArgumentException("Receipt with ID " + id + " not found.");
+        }
+        receiptPoints.remove(id);
+    }
+
+    public List<ReceiptSummaryResponse> filterReceipts(int minPoints, int maxPoints) {
+        return receiptPoints.entrySet().stream()
+                .filter(entry -> entry.getValue() >= minPoints && entry.getValue() <= maxPoints)
+                .map(entry -> new ReceiptSummaryResponse(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
+    }
+
+    public Map<String, Object> getReceiptAnalytics() {
+        if (receiptPoints.isEmpty()) {
+            throw new IllegalStateException("No receipts available for analytics.");
+        }
+
+        int totalReceipts = receiptPoints.size();
+        double averagePoints = receiptPoints.values().stream().mapToInt(Integer::intValue).average().orElse(0);
+        int maxPoints = receiptPoints.values().stream().mapToInt(Integer::intValue).max().orElse(0);
+        int minPoints = receiptPoints.values().stream().mapToInt(Integer::intValue).min().orElse(0);
+
+        Map<String, Object> analytics = new HashMap<>();
+        analytics.put("totalReceipts", totalReceipts);
+        analytics.put("averagePoints", averagePoints);
+        analytics.put("maxPoints", maxPoints);
+        analytics.put("minPoints", minPoints);
+
+        return analytics;
+    }
+
+//    public List<ReceiptSummaryResponse> processBulkReceipts(List<Receipt> receipts) {
+//        List<ReceiptSummaryResponse> responses = new ArrayList<>();
+//
+//        for (Receipt receipt : receipts) {
+//            // Process each receipt individually
+//            String id = processReceipt(receipt);
+//            int points = receiptPoints.get(id);
+//            responses.add(new ReceiptSummaryResponse(id, points));
+//        }
+//
+//        return responses;
+//    }
+
     //Validation checks
     private void validateReceipt(Receipt receipt) {
         if (receipt.getRetailer() == null || receipt.getRetailer().trim().isEmpty()) {
@@ -84,4 +146,7 @@ public class ReceiptService {
             }
         }
     }
+
+
+
 }
