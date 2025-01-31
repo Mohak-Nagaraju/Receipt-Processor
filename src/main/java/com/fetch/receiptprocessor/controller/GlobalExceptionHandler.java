@@ -25,4 +25,14 @@ public class GlobalExceptionHandler {
         // Returning the errors as a response
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
+
+    // Handling IllegalArgumentException for manual validation in ReceiptService
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, String>> handleIllegalArgumentException(IllegalArgumentException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", ex.getMessage());
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
 }
+

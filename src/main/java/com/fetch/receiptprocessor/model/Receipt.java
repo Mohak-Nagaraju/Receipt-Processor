@@ -8,9 +8,11 @@ public class Receipt {
     @NotBlank(message = "Retailer name must not be null or empty.")
     private String retailer;
 
-    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "Purchase date must be in the format yyyy-MM-dd.")
+    @NotBlank(message = "Purchase date must not be null or empty.")
+    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "Purchase Date must be in the format yyyy-MM-dd.")
     private String purchaseDate;
 
+    @NotBlank(message = "Purchase time must not be null or empty.")
     @Pattern(regexp = "\\d{2}:\\d{2}", message = "Purchase time must be in the format HH:mm.")
     private String purchaseTime;
 
